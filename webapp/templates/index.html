@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Dashboard">
+    <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+
+    <title>Exchange - Dashboard</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/static/css/bootstrap.css" rel="stylesheet">
+    <!--external css-->
+    <link href="/static/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="/static/css/zabuto_calendar.css">
+    <link rel="stylesheet" type="text/css" href="/static/js/gritter/css/jquery.gritter.css" />
+    <link rel="stylesheet" type="text/css" href="/static/lineicons/style.css">    
+    
+    <!-- Custom styles for this template -->
+    <link href="/static/css/style.css" rel="stylesheet">
+    <link href="/static/css/style-responsive.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/to-do.css">
+    
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+  <section id="container" >
+      <!-- **********************************************************************************************************************************************************
+      TOP BAR CONTENT & NOTIFICATIONS
+      *********************************************************************************************************************************************************** -->
+      <!--header start-->
+      <header class="header black-bg">
+              <div class="sidebar-toggle-box">
+                  <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
+              </div>
+            <!--logo start-->
+            <a href="/" class="logo"><b>Exchange</b></a>
+            <!--logo end-->
+            <div class="top-menu">
+            	<ul class="nav pull-right top-menu">
+                    <li><a class="logout" href="/logout">Logout</a></li>
+            	</ul>
+            </div>
+        </header>
+      <!--header end-->
+      
+      <!-- **********************************************************************************************************************************************************
+      MAIN SIDEBAR MENU
+      *********************************************************************************************************************************************************** -->
+      <!--sidebar start-->
+      <aside>
+          <div id="sidebar"  class="nav-collapse ">
+              <!-- sidebar menu start-->
+              <ul class="sidebar-menu" id="nav-accordion">
+              
+              	  <p class="centered"><a href="profile.html"><img src="/static/img/ui-sam.jpg" class="img-circle" width="60"></a></p>
+              	  <h5 class="centered">{{ user.username }}</h5>
+              	  	
+                  <li class="mt">
+                      <a class="active" href="/">
+                          <i class="fa fa-dashboard"></i>
+                          <span>Dashboard - Exchange</span>
+                      </a>
+                  </li>
+
+                  <li>
+                      <a href="/currencies" >
+                          <i class="fa fa-th"></i>
+                          <span>Currencies</span>
+                      </a>
+                  </li>
+
+              </ul>
+              <!-- sidebar menu end-->
+          </div>
+      </aside>
+      <!--sidebar end-->
+      
+      <!-- **********************************************************************************************************************************************************
+      MAIN CONTENT
+      *********************************************************************************************************************************************************** -->
+      <!--main content start-->
+      <section id="main-content">
+          <section class="wrapper">
+
+            <div class="row mt">
+              <div class="col-lg-12">
+                  <div class="form-panel">
+                      <h4 class="mb"> Get Updated Conversion Rates</h4>
+                      <span class="form-horizontal style-form" action="" method="">
+
+                        <div class="row">
+                          <div class="col-lg-6">
+                          <div class="form-group">
+                              <label class="col-sm-2 col-sm-2 control-label">From Currency</label>
+                              <div class="col-sm-10">
+                                  <select class="form-control placeholder-no-fix" name="liveConversionFrom" autocomplete="off"></select>
+                              </div>
+                          </div>
+                          </div>
+                          <div class="col-lg-6">
+                          <div class="form-group">
+                              <label class="col-sm-2 col-sm-2 control-label">To Currency</label>
+                              <div class="col-sm-10">
+                                  <select class="form-control placeholder-no-fix" name="liveConversionTo" autocomplete="off"></select>
+                              </div>
+                          </div>
+                          </div>
+                        </div>
+
+                          <div class="form-group">
+                              <label class="col-sm-2 col-sm-2 control-label"><h4>Rate</h4></label>
+                              <div class="col-sm-10">
+                                  <h4 id="loadedRate">?</h4>
+                              </div>
+                          </div>
+                          <button class="btn btn-theme" onClick="getConversionRate()" style="float: right;">Search</button>
+                          <div class="clear mb-1"></div>
+                      </span>
+                  </div>
+              </div><!-- col-lg-12-->       
+            </div><!-- /row -->   
+
+              <div class="row">
+                <div class="col-lg-12 main-chart">
+                  <!-- SORTABLE TO DO LIST -->
+                  <div class="row mb">
+                  <div class="col-md-12">
+                      <section class="task-panel tasks-widget">
+                    <div class="panel-heading">
+                          <div class="pull-left"><h5><i class="fa fa-tasks"></i> All Conversions - Exchange</h5></div>
+                          <br>
+                    </div>
+                          <div class="panel-body">
+
+                            <div class=" add-task-row">
+                                  <a class="btn btn-success btn-sm pull-left" href="#" onClick="conversionModal(0)">Add New Conversion</a>
+                              </div>
+
+                              <div class="clear mb-1"></div>
+
+                              <div class="task-content">
+                                  <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>From Currency</th>
+                                        <th>To Currency</th>
+                                        <th>Rate</th>
+                                        <th>Operations</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="lisAllConversions">
+                                    </tbody>
+                                  </table>
+                              </div>
+                          </div>
+                      </section>
+                  </div><!--/col-md-12 -->
+                  </div>
+                  <!-- /row -->
+                </div><!-- /col-lg-9 END SECTION MIDDLE -->
+                  
+                  
+
+              </div><!--/row -->
+          </section>
+      </section>
+
+      <!--main content end-->
+      <!--footer start-->
+      <footer class="site-footer">
+          <div class="text-center">
+              2020 - Developed By Syed Musa Raza
+              <a href="#" class="go-top">
+                  <i class="fa fa-angle-up"></i>
+              </a>
+          </div>
+      </footer>
+      <!--footer end-->
+  </section>
+
+  <!-- Modal -->
+              <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">
+                  <div class="modal-dialog">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                              <h4 class="modal-title">Do you Want to add/update a Conversion ?</h4>
+                          </div>
+                          <div class="modal-body">
+                            <div class="alert alert-danger" style="display: none" id="taskShareMsgs"><b>Error!</b><span></span></div>
+                              <input type="hidden" name="idOfCnvn">
+                              {% csrf_token %}
+                              <p>Conversion From.</p>
+                              <select class="form-control placeholder-no-fix" name="conversionFrom" autocomplete="off">
+                              </select>
+                              <br>
+
+                              <p>Conversion To.</p>
+                              <select class="form-control placeholder-no-fix" name="conversionTo" autocomplete="off">
+                              </select>
+
+                              <br>
+
+                              <p>Conversion Rate.</p>
+
+                              <input type="text" name="conversionRate" placeholder="Enter Conversion Rate" autocomplete="off" class="form-control placeholder-no-fix">
+    
+                          </div>
+                          <div class="modal-footer">
+                              <button data-dismiss="modal" class="btn btn-default" type="button">Cancel</button>
+                              <button class="btn btn-theme" type="button" id="modelSubmitBtn">Submit</button>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <!-- modal -->
+
+    <!-- js placed at the end of the document so the pages load faster -->
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/js/jquery-1.8.3.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script class="include" type="text/javascript" src="/static/js/jquery.dcjqaccordion.2.7.js"></script>
+    <script src="/static/js/jquery.scrollTo.min.js"></script>
+    <script src="/static/js/jquery.nicescroll.js" type="text/javascript"></script>
+    <script src="/static/js/jquery.sparkline.js"></script>
+
+
+    <!--common script for all pages-->
+    <script src="/static/js/common-scripts.js"></script>
+    
+    <script type="text/javascript" src="/static/js/gritter/js/jquery.gritter.js"></script>
+    <script type="text/javascript" src="/static/js/gritter-conf.js"></script>
+
+    <!--script for this page-->
+    <script src="/static/js/sparkline-chart.js"></script>    
+	<script src="/static/js/zabuto_calendar.js"></script>
+
+  <!--script for this page-->
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>    
+    <script src="/static/js/tasks.js" type="text/javascript"></script>
+
+    <script>
+
+var jwtToken = '{{request.session.token}}';
+
+
+    $.ajax({
+      async: true,
+      type: "GET",
+      contentType: "application/json",
+      url: "/currencies/",
+      headers: {"Authorization": "JWT " + jwtToken}
+    }).done(function(result) {
+      var selectConversionFrom=document.querySelector("select[name=liveConversionFrom]");
+      var selectConversionTo=document.querySelector("select[name=liveConversionTo]");
+
+      selectConversionFrom.innerHTML+='<option value="">Select a Currency</option>';
+      selectConversionTo.innerHTML+='<option value="">Select a Currency</option>';
+
+      $.each(result,function(index, data){
+        selectConversionFrom.innerHTML+='<option value="' + data.shortName + '">' + data.fullName + '</option>';
+        selectConversionTo.innerHTML+='<option value="' + data.shortName + '">' + data.fullName + '</option>';
+      });
+      
+    });
+
+  function conversionModal(cnvnId){
+    
+    $.ajax({
+      async: true,
+      type: "GET",
+      contentType: "application/json",
+      url: "/currencies/",
+      headers: {"Authorization": "JWT " + jwtToken}
+    }).done(function(result) {
+      var selectConversionFrom=document.querySelector("select[name=conversionFrom]");
+      var selectConversionTo=document.querySelector("select[name=conversionTo]");
+
+      selectConversionFrom.innerHTML+='<option value="">Select a Currency</option>';
+      selectConversionTo.innerHTML+='<option value="">Select a Currency</option>';
+
+      $.each(result,function(index, data){
+        selectConversionFrom.innerHTML+='<option value="' + data.shortName + '">' + data.fullName + '</option>';
+        selectConversionTo.innerHTML+='<option value="' + data.shortName + '">' + data.fullName + '</option>';
+      });
+
+      if(cnvnId > 0){
+        $('#modelSubmitBtn').attr("onClick","conversionUpdateRequest()");
+        getConversion(cnvnId);
+      }else{
+        $('#modelSubmitBtn').attr("onClick","conversionAddRequest()");
+      }
+
+    }).fail(function (jqXHR, textStatus) {
+        console.log('error');
+    });
+
+    $("#myModal").modal();
+  }
+
+var csrftoken = '{{csrf_token}}';
+
+
+function getConversion(cnvnId){
+      
+      $.ajax({
+        async: true,
+        type: "POST",
+        processData: false,
+        data: JSON.stringify({'id' : cnvnId}),
+        url: "/getconversion/",
+        headers: {"Content-Type": "application/json","Authorization": "JWT " + jwtToken}
+      }).done(function(result) {
+
+        $("input[name=idOfCnvn]").val(cnvnId);
+
+        $('select[name=conversionFrom] option').each(function(){
+            if($(this).attr("value") === result.currencyFromShortName){
+              $(this).attr("selected","selected");
+              return false;
+            }
+        });
+
+        $('select[name=conversionTo] option').each(function(){
+            if($(this).attr("value") === result.currencyToShortName){
+              $(this).attr("selected","selected");
+              return false;
+            }
+        });
+
+        $('input[name=conversionRate]').val(result.rate);
+
+      }).fail(function (jqXHR, textStatus) {
+          console.log('error');
+      });
+}
+
+function removeConversion(cnvnId){
+      
+      $.ajax({
+        async: true,
+        type: "POST",
+        processData: false,
+        data: JSON.stringify({'id' : cnvnId}),
+        url: "/removeconversion/",
+        headers: {"Content-Type": "application/json","Authorization": "JWT " + jwtToken}
+      }).done(function(result) {
+        alert('Removed Successfully');
+      }).fail(function (jqXHR, textStatus) {
+        alert('Error! Unable to remove Conversion');
+      });
+}
+
+  function conversionUpdateRequest(){
+
+    var reqData = {
+      'Id' : $('input[name=idOfCnvn]').val(),
+      'currency_from_short_name' : $('select[name=conversionFrom] option:selected').val(),
+      'currency_from_short_to' : $('select[name=conversionTo] option:selected').val(),
+      'rate' : $('input[name=conversionRate]').val(),
+    };
+
+            $.ajax({
+               type: "POST",
+               data: JSON.stringify(reqData),
+               contentType: "application/json",
+               url: "/updateconversion/",
+               headers: {"Authorization": "JWT " + jwtToken}
+            }).done(function(msg) {
+
+                  if(msg.Id){
+                    $('#taskShareMsgs').hide();
+                    $('#taskShareMsgs > span').html('');
+                    $('#myModal').modal('toggle');
+                    $('input[name=conversionFrom]').val('');
+                  }else{
+                    $('select[name=conversionFrom]').focus();
+                    $('#taskShareMsgs > span').html('Unable to add Conversion');
+                    $('#taskShareMsgs').show();
+                  }
+            });
+         }
+
+  function conversionAddRequest(){
+
+    var reqData = {
+      'currency_from_short_name' : $('select[name=conversionFrom] option:selected').val(),
+      'currency_from_short_to' : $('select[name=conversionTo] option:selected').val(),
+      'rate' : $('input[name=conversionRate]').val(),
+    };
+
+            $.ajax({
+               type: "POST",
+               data: JSON.stringify(reqData),
+               contentType: "application/json",
+               url: "/addconversion/",
+               headers: {"Authorization": "JWT " + jwtToken}
+            }).done(function(msg) {
+
+                  if(msg.Id){
+                    $('#taskShareMsgs').hide();
+                    $('#taskShareMsgs > span').html('');
+                    $('#myModal').modal('toggle');
+                    $('input[name=conversionFrom]').val('');
+                  }else{
+                    $('select[name=conversionFrom]').focus();
+                    $('#taskShareMsgs > span').html('Unable to add Conversion');
+                    $('#taskShareMsgs').show();
+                  }
+            });
+         }
+
+  function getConversionRate(){
+
+    var reqData = {
+      'currency_from_short_name' : $('select[name=liveConversionFrom] option:selected').val(),
+      'currency_from_short_to' : $('select[name=liveConversionTo] option:selected').val(),
+    };
+
+            $.ajax({
+               type: "POST",
+               data: JSON.stringify(reqData),
+               contentType: "application/json",
+               url: "/getconversionrate/",
+               headers: {"Authorization": "JWT " + jwtToken}
+            }).done(function(msg) {
+
+                  if(msg.rate){
+                    $('#loadedRate').html(msg.rate);
+                  }else{
+                    alert('Rate Not Found')
+                  }
+            });
+         }
+
+  $("#myModal").on('hidden.bs.modal', function () {
+    $('input[name=idOfCnvn]').val('');
+    $('#taskShareMsgs').hide();
+    $('#taskShareMsgs > span').html('');
+    $('input[name=conversionRate]').val('');
+    $('select[name=conversionFrom]').html('');
+    $('select[name=conversionTo]').html('');
+  });
+
+
+</script>
+
+<script>
+        var chatSocket=new WebSocket('ws://'+window.location.host+'/ws/exchange/');
+        chatSocket.onmessage=function(e){
+            var data=JSON.parse(e.data)
+
+            if(data.cnvOps === 'add'){
+              var div=document.querySelector("#lisAllConversions");
+              div.innerHTML+='<tr data-id="' + data.cnvId + '"><td>' + data.fromShortName+ '</td><td>' + data.toShortName + '</td><td>' + data.cnvRate + '</td><td><button onClick="conversionModal('+ data.cnvId +')" class="btn btn-primary btn-xs fa fa-pencil"></button> <button onClick="removeConversion('+ data.cnvId +')" class="btn btn-danger btn-xs fa fa-trash-o"></button></a></tr>';
+            }
+
+            if(data.cnvOps === 'update'){
+              $('#lisAllConversions tr').each(function(){
+                if(data.cnvId == $(this).attr("data-id")){
+                  $(this).children()[0].innerHTML = data.fromShortName;
+                  $(this).children()[1].innerHTML = data.toShortName;
+                  $(this).children()[2].innerHTML = data.cnvRate;
+                }
+              });
+            }
+
+            if(data.cnvOps === 'delete'){
+              $('#lisAllConversions tr').each(function(){
+                if(data.cnvId == $(this).attr("data-id")){
+                  $(this).remove();
+                  return false;
+                }
+              });
+            }
+            //console.log(e)
+        }
+        chatSocket.onclose=function(e){
+            // var data=JSON.parse(e.data)
+            // var message=data['message']
+            // var div=document.querySelector("#div_data");
+            // div.innerHTML+='<br><div style="padding:10px;color:#fff;background:dodgerblue;">'+message+'</div>';
+        }
+
+        // document.querySelector("#send_message").onclick=function(e){
+        //     var message=document.querySelector("#message").value;
+        //     chatSocket.send(JSON.stringify({'message':message}))
+        //     document.querySelector("#message").value=''
+        // }
+
+    </script>
+  
+
+  </body>
+</html>
